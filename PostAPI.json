@@ -1,0 +1,15 @@
+POST https://klant.sjoerdlohuis.nl/maq/wp-json/maq/v1/sites/2/stations/2/import HTTP/1.1
+Host: maq-observations.nl
+Accept: application/json
+Authorization: ApiKey <ApiKey>
+Content-Type: text/csv
+
+TIMESTAMP,NO2,NO,NOx
+yyyy-mm-dd HH:MM:SS UTC,ppb,ppb,ppb
+2022-12-30 23:00:10,4.5,-2.9,1.6
+2022-12-30 23:00:15,4.5,-2.8,1.7
+2022-12-30 23:00:20,4.6,-2.9,1.7
+2022-12-30 23:00:25,4.6,-2.9,1.7
+2022-12-30 23:00:30,4.5,-2.9,1.6
+2022-12-30 23:00:35,4.1,-2.9,1.2
+2022-12-30 23:00:40,3.7,-3.0,0.8
