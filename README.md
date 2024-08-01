@@ -11,4 +11,4 @@ Preprocessing scripts for preparing the MAQ-Observations.nl data and send it to 
     - Post2API-historical.py: Used to post historical data.
     - Post2API-functions.py: Toolbox used with all functions.
 
-This folder also includes an example how to post data using JSON commands (PostAPI.json). Again, an ApiKey that allows posting data is needed.
+This folder also includes an example how to post data using JSON commands (PostAPI.json) or remove datastreams through Python Requests. Again, an ApiKey that allows posting data or removing data is needed.
