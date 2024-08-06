@@ -4,7 +4,7 @@ import requests
 #It is used to remove faulty data or depracated streams.
 
 #Input variables:
-variable_id = '<variable_id>'                               #String of variable ID
+variable_id = '<variable_id>'    #String of variable ID
 API_KEY = '<ApiKey>'    #ApiKey
 
 #No need to change beyond this point
