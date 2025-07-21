@@ -203,6 +203,24 @@ def on_message(client, userdata, message):
                f"{device_id}_y": y
                }
            print(new_data) #for testing
+
+        if device_id[:2] == "dh":
+            # Decode distance
+            # Format: H=unsigned short (2 bytes), B=unsigned char (1 byte), h=signed short (2 bytes)
+            battery_mv, distance_raw, dig_int, Temp_opt,flag = struct.unpack(">HHBhB", decoded_bytes[:8])
+            distance_c = distance_raw / 1 #in mm
+        
+            # Print the results
+            print(f"[{timestamp}] {device_id} | Battery: {battery_mv} mV | Distance: {distance_c:.1f} mm")
+        
+            
+            # Create a row with NaNs for other devices
+            new_data = {
+                "timestamp": timestamp,
+                f"{device_id}_battery": battery_mv,
+                f"{device_id}_distance": distance_c
+            }
+ 
         # Load existing data or create new
         # Get today's date in UTC using gmtime
         ###today = datetime.fromtimestamp(gmtime()) #does not work
