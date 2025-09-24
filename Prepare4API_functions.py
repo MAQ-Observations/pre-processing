@@ -24,6 +24,7 @@ def dateparse_VK_BC               (date,time):
     t_index_          = pd.to_datetime(date + ' ' + time,format='%d-%b-%y %H:%M')
     return t_index_
 
+
 #---
 def Prepare4API_Loobos_BM         (t1,t2,datapath):
 
@@ -91,8 +92,6 @@ def Prepare4API_Loobos_BM_Backup         (t1,t2,datapath):
         print(filename)
         os.remove(filename)
     return
-
-
 
 #---
 def Prepare4API_Loobos_BM_Precip  (t1,t2,datapath):
@@ -297,6 +296,11 @@ def Prepare4API_Loobos_ST_Cal     (t1,t2,datapath):
     return
 
 #---
+def Prepare4API_Loobos_BM_MM     (t1,t2,datapath):
+    
+    return
+
+#---
 def Prepare4API_Veenkampen_Flux   (t1,t2,datapath):
     datapathin = os.path.join ('W:\\','ESG','DOW_MAQ','MAQ_Archive','Veenkampen_archive','veenkampen_data')
     
@@ -493,6 +497,7 @@ def Prepare4API_Veenkampen_BC     (t1,t2,datapath):
 #    vk_bc          = pd.read_csv(os.path.join(url,infilename),sep=',',names=all_keys,date_format='%d-%b-%y %H:%M', parse_dates=[['date','time']], index_col='date_time',na_values=[-999,-9999])   #ESG_SB_20243004+ Changed data processing from veenkampen.nl to W:\ drive
     vk_bc          = pd.read_csv(infilename,sep=',',names=all_keys,date_format='%d-%b-%y %H:%M', parse_dates=[['date','time']], index_col='date_time',na_values=[-999,-9999])    #ESG_SB_20243004+ Changed data processing from veenkampen.nl to W:\ drive
     vk_bc.drop(columns=vk_bc.columns[0], axis= 1 , inplace= True)
+    
         
     all_keys       = ['TIMESTAMP',]
     for key in vk_bc.keys(): all_keys.append(key)
@@ -502,7 +507,7 @@ def Prepare4API_Veenkampen_BC     (t1,t2,datapath):
     timeIndex      = pd.DatetimeIndex(timeIndex)
     vk_bc          = vk_bc.drop_duplicates()
     vk_bc          = vk_bc.reindex(timeIndex)
-    
+        
     outfilename    = 'VK_BC%4d%02d%02d.csv'%(t1.astype(object).year,t1.astype(object).month,t1.astype(object).day)
     outfilename    = os.path.join(datapath,'VK_BC',outfilename)
     with open(outfilename, 'w') as fp:
@@ -642,6 +647,7 @@ def Prepare4API_Veenkampen_BAM       (t1,t2,datapath):
     vk_bam = pd.read_csv(os.path.join(infilename),sep=',',skiprows=1,names=all_keys,date_format='%Y-%m-%d %H:%M', index_col='Time',na_values=[])
     vk_bam.index = pd.to_datetime(vk_bam.index, errors='coerce')
     vk_bam.drop(columns=vk_bam.columns[[2,4,8,9]], axis= 1 , inplace= True)
+    vk_bam.replace(0.985, np.nan, inplace=True)
     vk_bam = vk_bam.rename(columns={"Conc (mg/m3)": "BAM_Conc", "Qtot (m3)": "BAM_Qtot",
                            "WS (MPS)": "BAM_WS", "RH (%)": "BAM_RH",
                            "Delta (C)": "BAM_Delta", "AT (C)": "BAM_AT",
@@ -658,7 +664,7 @@ def Prepare4API_Veenkampen_BAM       (t1,t2,datapath):
     timeIndex         = pd.DatetimeIndex(timeIndex)
     vk_bam             = vk_bam.drop_duplicates()
     if t1 == np.datetime64('today'):
-        vk_bam             = vk_bam.reindex(timeIndex,method='bfill')
+        vk_bam             = vk_bam.reindex(timeIndex,method=None)
             
     outfilename    = 'VK_BAM%4d%02d%02d.csv'%(t1.astype(object).year,t1.astype(object).month,t1.astype(object).day)
     outfilename    = os.path.join(datapath,'VK_BAM',outfilename)
@@ -669,6 +675,7 @@ def Prepare4API_Veenkampen_BAM       (t1,t2,datapath):
     
     return
     
+
 #---
 def Prepare4API_Amsterdam_Flux    (t1,t2,datapath):
     datapathin = os.path.join('W:\\','ESG','DOW_MAQ','MAQ_Archive','AAMS_archive','AAMS_data')

@@ -6,7 +6,8 @@ import time
 def prepare_files(t1,t2,directory,END_POINT, today_yesterday):
     date_list = dates_between(t1,t2)
  
-    API_KEY = '<ApiKey>'    #New API-key for maq-observations.nl
+    #API_KEY = '834805e0-8b16-424b-9889-341d5e037fd8'   #Old API-key for sjoerdlohuis.nl/maq
+    API_KEY = '2ece4599-3157-40bf-ae13-351e1eb3ae92'    #New API-key for maq-observations.nl
     HOST_KL = 'https://maq-observations.nl'                     #Website URL
 
     array_files_n = get_file_names(os.path.join(directory),date_list) #Get all file names in the directory to post

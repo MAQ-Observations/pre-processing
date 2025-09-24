@@ -9,13 +9,13 @@ datapath    = os.path.join('W:\\','ESG','DOW_MAQ','MAQ_Archive','MAQ-Observation
 #--- Define the day to process; by default yesterday, today. To run it for different days and longer periods use the Post2API_historical.py script.
 #t1          = np.datetime64('1900-01-01').astype('datetime64[D]')   #Start point
 #t2          = np.datetime64('1900-12-31').astype('datetime64[D]')   #End point
-t1          = np.datetime64('2024-01-28').astype('datetime64[D]')
-t2          = np.datetime64('2024-12-12').astype('datetime64[D]') # exclusive
+t1          = np.datetime64('2025-03-01').astype('datetime64[D]')
+t2          = np.datetime64('2025-07-18').astype('datetime64[D]') # exclusive
 
 #--- Select which streams to process
 all_streams = ['VK_Meteo','VK_Flux','VK_BC','VK_PM','VK_Teledyne','VK_BAM','LB_BM','LB_BM_Backup','LB_BM_Precipitation','LB_BM_soil','LB_EC','LB_ST','LB_LFW','AD_Rad','AD_Flux'] #'LB_AQ'
 do_streams  = all_streams
-do_streams = ['VK_BAM']
+do_streams = ['AD_Rad']
 
 #Define datapaths
 datapath_VK_Meteo     = os.path.join(datapath,'VK_METEO')
