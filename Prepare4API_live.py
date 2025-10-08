@@ -22,9 +22,9 @@ day2        = day1 + np.timedelta64(2,'D') # exclusive
 #    day2        = np.datetime64('2023-11-20').astype('datetime64[D]') + np.timedelta64(1,'D') # exclusive
 
 #--- Select which streams to process
-all_streams = ['Veenkampen_Meteo','Veenkampen_Flux','Veenkampen_BC','Veenkampen_PM','Veenkampen_Teledyne','Veenkampen_BAM','Loobos_BM','Loobos_BM-Backup','Loobos_BM_Soil','Loobos_BM_Precip','Loobos_EC','Loobos_ST','Loobos_LFW','Amsterdam_Rad','Amsterdam_Flux'] #'Loobos_AQ',
+all_streams = ['Veenkampen_Meteo','Veenkampen_Flux','Veenkampen_BC','Veenkampen_PM','Veenkampen_Teledyne','Veenkampen_BAM','Loobos_BM','Loobos_BM-Backup','Loobos_BM_Soil','Loobos_BM_Precip','Loobos_EC','Loobos_ST','Loobos_LFW','Loobos_BM-MM','Amsterdam_Rad','Amsterdam_Flux'] #'Loobos_AQ',
 do_streams  = all_streams
-do_streams = ['Veenkampen_Meteo','Veenkampen_Flux','Veenkampen_BC','Veenkampen_PM','Veenkampen_Teledyne','Veenkampen_BAM','Loobos_BM','Loobos_BM-Backup','Loobos_BM_Soil','Loobos_BM_Precip','Loobos_EC','Loobos_ST','Loobos_LFW','Amsterdam_Rad','Amsterdam_Flux'] #'Loobos_AQ',
+do_streams = ['Veenkampen_Meteo','Veenkampen_Flux','Veenkampen_BC','Veenkampen_PM','Veenkampen_Teledyne','Veenkampen_BAM','Loobos_BM','Loobos_BM-Backup','Loobos_BM_Soil','Loobos_BM_Precip','Loobos_EC','Loobos_ST','Loobos_LFW','Loobos_BM-MM','Amsterdam_Rad','Amsterdam_Flux'] #'Loobos_AQ',
 
 
 #--- Loop over all selected days 
@@ -135,6 +135,14 @@ for t1 in days:
             print('Prepare4API_Loobos_LFW successful')
         except:
             print('Prepare4API_Loobos_LFW failed')
+            
+    #--- Loobos BM MM
+    if 'Loobos_BM-MM' in do_streams: 
+        try: 
+            Prepare4API_Loobos_BM_MM(t1,t2, datapath)
+            print('Prepare4API_Loobos_BM-MM successful')
+        except:
+            print('Prepare4API_Loobos_BM-MM failed')
     
     #--- Prepare4API_Amsterdam_Rad
     if 'Amsterdam_Rad' in do_streams: 

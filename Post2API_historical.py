@@ -9,13 +9,13 @@ datapath    = os.path.join('W:\\','ESG','DOW_MAQ','MAQ_Archive','MAQ-Observation
 #--- Define the day to process; by default yesterday, today. To run it for different days and longer periods use the Post2API_historical.py script.
 #t1          = np.datetime64('1900-01-01').astype('datetime64[D]')   #Start point
 #t2          = np.datetime64('1900-12-31').astype('datetime64[D]')   #End point
-t1          = np.datetime64('2025-03-01').astype('datetime64[D]')
-t2          = np.datetime64('2025-07-18').astype('datetime64[D]') # exclusive
+t1          = np.datetime64('2025-09-01').astype('datetime64[D]')
+t2          = np.datetime64('2025-10-08').astype('datetime64[D]') # exclusive
 
 #--- Select which streams to process
-all_streams = ['VK_Meteo','VK_Flux','VK_BC','VK_PM','VK_Teledyne','VK_BAM','LB_BM','LB_BM_Backup','LB_BM_Precipitation','LB_BM_soil','LB_EC','LB_ST','LB_LFW','AD_Rad','AD_Flux'] #'LB_AQ'
+all_streams = ['VK_Meteo','VK_Flux','VK_BC','VK_PM','VK_Teledyne','VK_BAM','LB_BM','LB_BM_Backup','LB_BM_Precipitation','LB_BM_soil','LB_EC','LB_ST','LB_LFW','LB_BM-MM','AD_Rad','AD_Flux'] #'LB_AQ'
 do_streams  = all_streams
-do_streams = ['AD_Rad']
+do_streams = ['LB_BM-MM']
 
 #Define datapaths
 datapath_VK_Meteo     = os.path.join(datapath,'VK_METEO')
@@ -32,6 +32,7 @@ datapath_LB_EC        = os.path.join(datapath,'LB_EC')
 datapath_LB_ST        = os.path.join(datapath,'LB_ST')
 datapath_LB_AQ        = os.path.join(datapath,'LB_AQ')
 datapath_LB_LFW       = os.path.join(datapath,'LB_LFW')
+datapath_LB_BM_MM     = os.path.join(datapath,'LB_BM-MM')
 datapath_AD_Rad       = os.path.join(datapath,'AD_RAD')
 datapath_AD_Flux      = os.path.join(datapath,'AD_FLUX')
 
@@ -137,6 +138,13 @@ if 'LB_LFW' in do_streams:
         print('Post2API Loobos LFW successful')
     except:
         print('Post2API Loobos LFW failed')
+        
+if 'LB_BM-MM' in do_streams: 
+    try: #--- Post2API Loobos BM-MM
+        prepare_files(t1,t2,datapath_LB_BM_MM,END_POINT_LB,False)
+        print('Post2API Loobos BM-MM successful')
+    except:
+        print('Post2API Loobos BM-MM failed')
 
 if 'AD_Rad' in do_streams: 
     try: #--- Post2API Amsterdam Rad

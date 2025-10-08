@@ -297,7 +297,42 @@ def Prepare4API_Loobos_ST_Cal     (t1,t2,datapath):
 
 #---
 def Prepare4API_Loobos_BM_MM     (t1,t2,datapath):
+    all_keys             = ["TIMESTAMP","BattV_Min","PTemp_C_Avg","throughfall_1_tips_Tot","throughfall_1_mm_Tot","dendro_volt_Avg","dendro_um_Avg","Tensio_Temp_1_Avg","Tensio_Pres_1_Avg","Tensio_Tens_1_Avg","Tensio_VWC_Raw_1_Avg","Tensio_VWC_1_Avg","Tensio_Temp_2_Avg","Tensio_Pres_2_Avg","Tensio_Tens_2_Avg","Tensio_VWC_Raw_2_Avg","Tensio_VWC_2_Avg","Tensio_Temp_3_Avg","Tensio_Pres_3_Avg","Tensio_Tens_3_Avg","Tensio_VWC_Raw_3_Avg","Tensio_VWC_3_Avg","Tensio_Temp_4_Avg","Tensio_Pres_4_Avg","Tensio_Tens_4_Avg","Tensio_VWC_Raw_4_Avg","Tensio_VWC_4_Avg","Tensio_Temp_5_Avg","Tensio_Pres_5_Avg","Tensio_Tens_5_Avg","Tensio_VWC_Raw_5_Avg","Tensio_VWC_5_Avg","Tensio_Temp_6_Avg","Tensio_Pres_6_Avg","Tensio_Tens_6_Avg","Tensio_VWC_Raw_6_Avg","Tensio_VWC_6_Avg","Ka_1_Avg","SoilTemp_1_Avg","VWC_1_Avg","Ka_2_Avg","SoilTemp_2_Avg","VWC_2_Avg","Ka_3_Avg","SoilTemp_3_Avg","VWC_3_Avg","Ka_4_Avg","SoilTemp_4_Avg","VWC_4_Avg","Ka_5_Avg","SoilTemp_5_Avg","VWC_5_Avg","Ka_6_Avg","SoilTemp_6_Avg","VWC_6_Avg"]
+    #--- Read infile
+    bm_mm           = Loobos_Read_NL_Loo_BM_MM(  t1,t2,keys=None,API=True)
+            
+    #--- UTC
+    CET             = pytz.timezone('Etc/GMT-1')
+    bm_mm.index     = bm_mm.index.tz_localize(CET).tz_convert(pytz.utc)
+    bm_mm.drop(["BattV_Min","PTemp_C_Avg","throughfall_1_tips_Tot","dendro_volt_Avg","dendro_um_Avg","Tensio_Temp_1_Avg","Tensio_Pres_1_Avg","Tensio_VWC_Raw_1_Avg","Tensio_VWC_1_Avg","Tensio_Temp_2_Avg","Tensio_Pres_2_Avg","Tensio_VWC_Raw_2_Avg","Tensio_VWC_2_Avg","Tensio_Temp_3_Avg","Tensio_Pres_3_Avg","Tensio_VWC_Raw_3_Avg","Tensio_VWC_3_Avg","Tensio_Temp_4_Avg","Tensio_Pres_4_Avg","Tensio_VWC_Raw_4_Avg","Tensio_VWC_4_Avg","Tensio_Temp_5_Avg","Tensio_Pres_5_Avg","Tensio_VWC_Raw_5_Avg","Tensio_VWC_5_Avg","Tensio_Temp_6_Avg","Tensio_Pres_6_Avg","Tensio_VWC_Raw_6_Avg","Tensio_VWC_6_Avg","Ka_1_Avg","SoilTemp_1_Avg","Ka_2_Avg","SoilTemp_2_Avg","Ka_3_Avg","SoilTemp_3_Avg","Ka_4_Avg","SoilTemp_4_Avg","Ka_5_Avg","SoilTemp_5_Avg","Ka_6_Avg","SoilTemp_6_Avg"], axis= 1 , inplace= True)
+        
+    bm_mm = bm_mm.rename(columns={"throughfall_1_mm_Tot": "MM_P_1_1_1", "dendro_um_Avg": "MM_DENDRO_1_1_1",
+                           'Tensio_Tens_1_Avg': 'MM_TENS_2_1_1',          'Tensio_Tens_2_Avg': 'MM_TENS_3_1_1',          'Tensio_Tens_3_Avg': 'MM_TENS_4_1_1',          'Tensio_Tens_4_Avg': 'MM_TENS_5_1_1',          'Tensio_Tens_5_Avg': 'MM_TENS_6_1_1',          'Tensio_Tens_6_Avg': 'MM_TENS_7_1_1',
+                           'VWC_1_Avg': 'MM_VWC_1_1_1',               'VWC_2_Avg': 'MM_VWC_2_1_1',               'VWC_3_Avg': 'MM_VWC_3_1_1',               'VWC_4_Avg': 'MM_VWC_4_1_1',               'VWC_5_Avg': 'MM_VWC_5_1_1',               'VWC_6_Avg': 'MM_VWC_6_1_1'                          
+                           })
+
+
+    units_dict_mm =     {'TIMESTAMP'    : 'yyyy-mm-dd HH:MM:SS UTC',
+                           'MM_P_1_1_1': 'mm',         'MM_DENDRO_1_1_1': 'µm',
+                           'MM_TENS_2_1_1': 'kPa',     'MM_TENS_3_1_1': 'kPa',     'MM_TENS_4_1_1': 'kPa',     'MM_TENS_5_1_1': 'kPa',     'MM_TENS_6_1_1': 'kPa',     'MM_TENS_7_1_1': 'kPa',
+                           'MM_VWC_1_1_1': 'm3 m-3',   'MM_VWC_2_1_1': 'm3 m-3',   'MM_VWC_3_1_1': 'm3 m-3',   'MM_VWC_4_1_1': 'm3 m-3',   'MM_VWC_5_1_1': 'm3 m-3',   'MM_VWC_6_1_1': 'm3 m-3',                          
+                           }
+                           
+    all_keys             = ["TIMESTAMP","MM_P_1_1_1","MM_DENDRO_1_1_1","MM_TENS_2_1_1","MM_TENS_3_1_1","MM_TENS_4_1_1","MM_TENS_5_1_1","MM_TENS_6_1_1","MM_TENS_7_1_1","MM_VWC_1_1_1","MM_VWC_2_1_1","MM_VWC_3_1_1","MM_VWC_4_1_1","MM_VWC_5_1_1","MM_VWC_6_1_1"]
     
+    # Write outfile
+    filename = os.path.join(datapath,'LB_BM-MM','LB_BM-MM%4d%02d%02d.csv'%(t1.astype(object).year, t1.astype(object).month, t1.astype(object).day))
+    units    = [units_dict_mm[key] for key in all_keys]
+    with open(filename, 'w') as fp:
+        fp.write(','.join(all_keys) + '\n')
+        fp.write(','.join(units   ) + '\n')
+        
+    print(bm_mm)
+            
+    bm_mm.to_csv(filename,sep=',',header=None,mode='a',na_rep='NaN',date_format='%Y-%m-%d %H:%M:%S')
+    if np.isnan(bm_mm.values).all() == True:
+        print(filename)
+        os.remove(filename)
     return
 
 #---
